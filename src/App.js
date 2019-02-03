@@ -9,14 +9,17 @@ class App extends Component {
     this.state = {
         todos: [],
     }
-
-    setTimeout(() => {
-        this.addToList('testing', true, Date.now() + 1000*60*60*24)
-    }, 2000);
   }
 
   addToList(name, isCompleted, dueDate) {
     const newTodos = addTodo(this.state.todos, name, isCompleted, dueDate);
+    this.setState({
+        todos: newTodos,
+    })
+  }
+
+  removeFromList(index) {
+    const newTodos = removeTodo(this.state.todos, index);
     this.setState({
         todos: newTodos,
     })
