@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Col, Container, Row } from 'reactstrap';
 
 import {addTodo, removeTodo, updateTodo} from './todolist';
+import { TodoInput } from './Components/TodoInput';
+import { TodoList } from './Components/TodoList';
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +15,7 @@ class App extends Component {
   }
 
   addToList(name, isCompleted, dueDate) {
+    console.log(this.state)
     const newTodos = addTodo(this.state.todos, name, isCompleted, dueDate);
     this.setState({
         todos: newTodos,
@@ -27,14 +31,35 @@ class App extends Component {
 
   render() {
     console.log('todos', this.state.todos)
-    return (
-      <div className="App">
-        <header className="App-header">
-            <h1>Hello, Wrold!</h1>
-        </header>
-      </div>
-    );
+    const Input = <Row>
+        <TodoInput onTodoEntered={(name, isCompleted, dueDate) => this.addToList(name, isCompleted, dueDate)} />
+    </Row>
+
+    let Todos = null;
+    if (this.state.todos.length > 0) {
+        Todos = <Fragment>
+            <Row>
+                <h1>Todos</h1>
+            </Row>
+            <Row>
+                <TodoList todos={this.state.todos} />
+            </Row>
+        </Fragment>
+    }
+
+    return <Container>
+        <br />
+        {Input}
+        <br />
+        {Todos}
+    </Container>;
   }
 }
 
 export default App;
+
+
+
+
+
+
