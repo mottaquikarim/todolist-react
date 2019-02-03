@@ -14,7 +14,7 @@ class App extends Component {
     }
   }
 
-  addToList(name, isCompleted, dueDate) {
+  addToList = (name, isCompleted, dueDate) => {
     console.log(this.state)
     const newTodos = addTodo(this.state.todos, name, isCompleted, dueDate);
     this.setState({
@@ -22,7 +22,7 @@ class App extends Component {
     })
   }
 
-  removeFromList(index) {
+  removeFromList = (index) => {
     const newTodos = removeTodo(this.state.todos, index);
     this.setState({
         todos: newTodos,
@@ -32,7 +32,7 @@ class App extends Component {
   render() {
     console.log('todos', this.state.todos)
     const Input = <Row>
-        <TodoInput onTodoEntered={(name, isCompleted, dueDate) => this.addToList(name, isCompleted, dueDate)} />
+        <TodoInput onTodoEntered={this.addToList} />
     </Row>
 
     let Todos = null;
@@ -42,7 +42,9 @@ class App extends Component {
                 <h1>Todos</h1>
             </Row>
             <Row>
-                <TodoList todos={this.state.todos} />
+                <TodoList
+                    todos={this.state.todos}
+                    onRemoveTodo={this.removeFromList} />
             </Row>
         </Fragment>
     }
